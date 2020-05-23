@@ -1,0 +1,6 @@
+node_modules
+projects/documentation/node_modules
+projects/**/**/node_modules
+projects/**/**/build
+projects/**/**/dist
+**/*.min.js
