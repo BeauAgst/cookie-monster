@@ -1,11 +1,7 @@
 import waitForEl from '../utils/wait-for-el'
 
 /*
-  https://www.cookielaw.org/
-
-  Cookies that can be disabled:
-  > Performance
-  > Targeting
+  https://www.cookielaw.org/optanon-eprivacy/how-optanon-works/
 */
 
 const clickSettingsButton = async function clickSettingsButton(): Promise<void> {
@@ -40,7 +36,7 @@ const savePrefernces = async function savePreferences(modal: HTMLElement): Promi
   button.click()
 }
 
-export default async function cookieLawHandler() {
+const handler = async function handler(): Promise<void> {
   try {
     const settingsContainer = await waitForEl('.optanon-alert-box-wrapper', { maxAttempts: 10, timeout: 100 })
     if (settingsContainer.style.display === 'none') return
@@ -52,4 +48,16 @@ export default async function cookieLawHandler() {
   } catch (error) {
     console.log(error.message)
   }
+}
+
+const rule = function rule(): boolean {
+  const allScripts: HTMLLinkElement[] | null = Array.from(document.querySelectorAll('link[type="text/css"]'))
+  if (!allScripts.length) return false
+
+  return !!allScripts.find(({ href }) => href.includes('optanon.css'))
+}
+
+export default {
+  rule,
+  handler,
 }
