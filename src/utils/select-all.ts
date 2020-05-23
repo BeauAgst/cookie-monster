@@ -12,18 +12,14 @@ const baseOptions: Options = {
   timeout: 50,
 }
 
-export default async function waitForEl(
-  identifier: string,
-  opts?: Partial<Options>,
-  attempt = 1
-): Promise<HTMLElement> {
+export default async function $$(identifier: string, opts?: Partial<Options>, attempt = 1): Promise<HTMLElement[]> {
   const options = Object.assign({}, baseOptions, opts)
   if (attempt > options.maxAttempts) throw new Error(`Unable to find "${identifier}"`)
 
-  const el: HTMLElement | null = options.parent.querySelector(identifier)
+  const els: NodeListOf<HTMLElement> | null = options.parent.querySelectorAll(identifier)
 
-  if (el) return el
+  if (els.length) return Array.from(els)
 
   await delay(options.timeout)
-  return waitForEl(identifier, opts, ++attempt)
+  return $$(identifier, opts, ++attempt)
 }

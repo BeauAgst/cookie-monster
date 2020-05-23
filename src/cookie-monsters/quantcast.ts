@@ -1,7 +1,7 @@
 import getCookie from '../utils/get-cookie'
 import getHostnameFromString from '../utils/get-hostname-from-string'
-import waitForEl from '../utils/wait-for-el'
-import waitForElByInnerText from '../utils/wait-for-el-by-innertext'
+import $ from '../utils/select'
+import $$ from '../utils/wait-for-el-by-innertext'
 
 /*
   https://www.quantcast.com/
@@ -9,17 +9,17 @@ import waitForElByInnerText from '../utils/wait-for-el-by-innertext'
 */
 
 const openMoreOptions = async function openMoreOptions(): Promise<void> {
-  const button = await waitForElByInnerText('.qc-cmp-button', document, 'more options')
+  const button = await $$('.qc-cmp-button', document, 'more options')
   button.click()
 }
 
 const clickRejectAll = async function clickRejectAll(): Promise<void> {
-  const button = await waitForElByInnerText('.qc-cmp-button', document, 'reject all')
+  const button = await $$('.qc-cmp-button', document, 'reject all')
   button.click()
 }
 
 const savePreferences = async function savePreferences(): Promise<void> {
-  const button = await waitForElByInnerText('.qc-cmp-button', document, 'save &amp; exit')
+  const button = await $$('.qc-cmp-button', document, 'save &amp; exit')
   button.click()
 }
 
@@ -27,12 +27,12 @@ const handler = async function handler() {
   if (getCookie('euconsent')) return
 
   try {
-    await waitForEl('.qc-cmp-ui', {
+    await $('.qc-cmp-ui', {
       maxAttempts: 10,
       timeout: 100,
     })
 
-    await waitForEl('.qc-cmp-ui', { maxAttempts: 10, timeout: 100 })
+    await $('.qc-cmp-ui', { maxAttempts: 10, timeout: 100 })
     await openMoreOptions()
     await clickRejectAll()
     await savePreferences()
