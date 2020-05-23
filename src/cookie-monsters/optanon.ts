@@ -27,7 +27,7 @@ const toggleActiveState = async function toggleActiveState(modal: HTMLElement): 
   const toggle = (await waitForEl('.optanon-status-checkbox', {
     parent: modal,
   })) as HTMLInputElement
-  if (toggle.checked) return
+  if (!toggle.checked) return
   toggle.click()
 }
 
