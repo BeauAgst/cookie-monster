@@ -1,4 +1,5 @@
 import getCookie from '../utils/get-cookie'
+import getHostnameFromString from '../utils/get-hostname-from-string'
 import waitForEl from '../utils/wait-for-el'
 import waitForElByInnerText from '../utils/wait-for-el-by-innertext'
 
@@ -22,7 +23,7 @@ const savePreferences = async function savePreferences(): Promise<void> {
   button.click()
 }
 
-export default async function quantcastHandler() {
+const handler = async function handler() {
   if (getCookie('euconsent')) return
 
   try {
@@ -39,3 +40,11 @@ export default async function quantcastHandler() {
     console.log(error.message)
   }
 }
+
+const rule = function rule(): boolean {
+  const scripts = document.querySelectorAll('script')
+  if (!scripts) return false
+  return !!Array.from(scripts).find(({ src }) => getHostnameFromString(src) === 'quantcast.mgr.consensu.org')
+}
+
+export default { handler, rule }
