@@ -14,7 +14,7 @@ const plugins = [
     exclude: 'node_modules/**',
   }),
   terser({
-    sourcemap: false,
+    sourcemap: true,
   }),
 ]
 
