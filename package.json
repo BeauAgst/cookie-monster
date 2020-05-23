@@ -1,7 +1,7 @@
 {
-  "name": "cookie-blocker",
+  "name": "cookie-monster",
   "version": "1.0.0",
-  "description": "",
+  "description": "Block cookies from well-known cookie libraries",
   "author": "Beau August",
   "main": "background.js",
   "scripts": {
