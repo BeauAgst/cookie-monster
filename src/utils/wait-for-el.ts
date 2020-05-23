@@ -1,16 +1,29 @@
 import delay from './delay'
 
+interface Options {
+  maxAttempts: number
+  parent: Document | HTMLElement
+  timeout: number
+}
+
+const baseOptions: Options = {
+  maxAttempts: 5,
+  parent: document,
+  timeout: 50,
+}
+
 export default async function waitForEl(
   identifier: string,
-  parent: Document | HTMLElement = document,
+  opts?: Partial<Options>,
   attempt = 1
 ): Promise<HTMLElement> {
-  if (attempt === 5) throw new Error(`Unable to find "${identifier}"`)
+  const options = Object.assign({}, baseOptions, opts)
+  if (attempt > options.maxAttempts) throw new Error(`Unable to find "${identifier}"`)
 
-  const el: HTMLElement | null = parent.querySelector(identifier)
+  const el: HTMLElement | null = options.parent.querySelector(identifier)
 
   if (el) return el
 
-  await delay(50)
-  return waitForEl(identifier, parent, ++attempt)
+  await delay(options.timeout)
+  return waitForEl(identifier, opts, ++attempt)
 }
