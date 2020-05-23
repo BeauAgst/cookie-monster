@@ -23,24 +23,26 @@ const disableAllCookies = async function disableAllCookies(modal: HTMLElement) {
 }
 
 const setTab = async function setTab(modal: HTMLElement, tab: string): Promise<void> {
-  const button = await waitForEl(`${tab} button`, modal)
+  const button = await waitForEl(`${tab} button`, { parent: modal })
   button.click()
 }
 
 const toggleActiveState = async function toggleActiveState(modal: HTMLElement): Promise<void> {
-  const toggle = (await waitForEl('.optanon-status-checkbox', modal)) as HTMLInputElement
+  const toggle = (await waitForEl('.optanon-status-checkbox', {
+    parent: modal,
+  })) as HTMLInputElement
   if (toggle.checked) return
   toggle.click()
 }
 
 const savePrefernces = async function savePreferences(modal: HTMLElement): Promise<void> {
-  const button = await waitForEl('button[aria-label="Save Settings"]', modal)
+  const button = await waitForEl('button[aria-label="Save Settings"]', { parent: modal })
   button.click()
 }
 
 export default async function cookieLawHandler() {
   try {
-    const settingsContainer = await waitForEl('.optanon-alert-box-wrapper')
+    const settingsContainer = await waitForEl('.optanon-alert-box-wrapper', { maxAttempts: 10, timeout: 100 })
     if (settingsContainer.style.display === 'none') return
 
     await clickSettingsButton()
@@ -48,6 +50,6 @@ export default async function cookieLawHandler() {
     await disableAllCookies(modal)
     await savePrefernces(modal)
   } catch (error) {
-    console.log(error)
+    console.log(error.message)
   }
 }
