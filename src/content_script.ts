@@ -3,6 +3,7 @@ import asyncFind from './utils/async-find'
 import delay from './utils/delay'
 
 interface Monster {
+  name: string
   rule: () => Promise<boolean>
   handler: () => Promise<void>
 }
@@ -16,7 +17,7 @@ const init = async function init() {
 
   if (!monsterMatch) return
 
-  monsterMatch.handler()
+  await monsterMatch.handler()
 }
 
 init()

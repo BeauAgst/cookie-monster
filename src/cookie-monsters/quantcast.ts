@@ -77,7 +77,10 @@ const handler = async function handler() {
 const rule = function rule(): boolean {
   const scripts = document.querySelectorAll('script')
   if (!scripts) return false
-  return !!Array.from(scripts).find(({ src }) => getHostnameFromString(src) === 'static.quantcast.mgr.consensu.org')
+  return !!Array.from(scripts).find(({ src }) => getHostnameFromString(src) === 'quantcast.mgr.consensu.org')
 }
 
-export default { handler, rule }
+export default {
+  handler,
+  rule,
+}
