@@ -1,0 +1,24 @@
+{
+  "manifest_version": 2,
+
+  "name": "Cookie Monster",
+  "description": "Block cookies from well-known cookie libraries",
+  "version": "1.0",
+
+  "icons": {
+    "18": "icons/18.png",
+    "32": "icons/32.png",
+    "128": "icons/128.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content_script.js"
+      ]
+    }
+  ]
+}
