@@ -60,8 +60,6 @@ const handler = async function handler() {
   try {
     const configuration = getCookieConfiguration()
 
-    console.log(configuration)
-
     if (configuration.includes('cmpui-banner')) {
       await handleBannerConfiguration()
       return
